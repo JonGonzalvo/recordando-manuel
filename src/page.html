@@ -5,33 +5,31 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: a quiet memorial book. Portrait and dedication side by side, a full-width writing desk, then one column of letters. Colors taken from the pine trail in his photo. */
+/* One deliberate look: dark pine, the same for every viewer and device. */
 :root {
-  --bg: #ECEEE8;
-  --surface: #F5F6F2;
-  --ink: #1D2520;
-  --muted: #5B655D;
-  --rule: #C9CEC3;
-  --accent: #74462A;
-  --accent-ink: #FFFFFF;
-  --moss: #50603F;
-  --field: #FFFFFF;
-  --danger: #8E2F23;
+  --bg: #121713;
+  --surface: #19201B;
+  --ink: #E4E7E0;
+  --muted: #9AA398;
+  --rule: #2D3630;
+  --accent: #C99369;
+  --accent-ink: #1B120B;
+  --moss: #A1B48C;
+  --field: #0F1310;
+  --danger: #E08A7C;
   --display: "Libre Caslon Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #121713; --surface: #19201B; --ink: #E4E7E0; --muted: #9AA398; --rule: #2D3630;
-    --accent: #C99369; --accent-ink: #1B120B; --moss: #A1B48C; --field: #0F1310; --danger: #E08A7C;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #121713; --surface: #19201B; --ink: #E4E7E0; --muted: #9AA398; --rule: #2D3630;
-  --accent: #C99369; --accent-ink: #1B120B; --moss: #A1B48C; --field: #0F1310; --danger: #E08A7C;
   color-scheme: dark;
 }
+
+/* Bilingual text: both languages sit in the same cell and only one is visible,
+   so the slot is always sized for the longer one and nothing moves on toggle. */
+.bi { display: inline-grid; max-width: 100%; }
+.bi > span { grid-area: 1 / 1; min-width: 0; }
+.bi > span:not(.on) { visibility: hidden; }
+.lede > .bi, .translate-note > .bi, .composer-intro > .bi, .section-sub > .bi { display: grid; }
+.link .bi > span { text-decoration: underline; text-underline-offset: 3px; }
 
 * { box-sizing: border-box; }
 body {
@@ -202,8 +200,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="dedication">
         <div class="eyebrow" data-i18n="eyebrow"></div>
         <h1><span>Manuel</span> <span>Crosthwaite</span></h1>
-        <p class="lede" data-i18n="lede"></p>
-        <p class="translate-note" data-i18n="translateNote"></p>
+        <p class="lede" data-i18n="lede" data-i18n-family="ledeFamily"></p>
+        <p class="translate-note" data-i18n="translateNote" data-i18n-family="noteFamily"></p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#share" id="hero-share" data-i18n="shareCta"></a>
           <span class="count" id="count" aria-live="polite"></span>
@@ -390,6 +388,16 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     for (const kid of kids) if (kid) n.append(kid);
     return n;
   };
+  // Both languages stacked in one cell; only the current one is visible (see .bi in the styles).
+  const bi = (key, fill) => {
+    const wrap = el("span", { class: "bi" });
+    for (const l of ["en", "es"]) {
+      let s = T[l][key] ?? "";
+      if (fill) for (const [k, v] of Object.entries(fill)) s = s.replace("{" + k + "}", v);
+      wrap.append(el("span", { lang: l, class: l === lang ? "on" : "", "aria-hidden": l === lang ? null : "true", text: s }));
+    }
+    return wrap;
+  };
   const translateIcon = () => {
     const ns = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(ns, "svg");
@@ -405,12 +413,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   // ---------- Static copy ----------
   function applyCopy() {
     document.documentElement.lang = lang;
-    document.querySelectorAll("[data-i18n]").forEach((n) => { n.textContent = t(n.dataset.i18n); });
-    if (FAMILY) {
-      document.title = lang === "es" ? "Recordando a Manuel" : "Remembering Manuel";
-      document.querySelector('[data-i18n="lede"]').textContent = t("ledeFamily");
-      document.querySelector('[data-i18n="translateNote"]').textContent = t("noteFamily");
-    }
+    document.querySelectorAll("[data-i18n]").forEach((n) => {
+      const key = (FAMILY && n.dataset.i18nFamily) || n.dataset.i18n;
+      n.replaceChildren(bi(key));
+    });
+    if (FAMILY) document.title = lang === "es" ? "Recordando a Manuel" : "Remembering Manuel";
     $("portrait").alt = t("alt");
     $("lang-es").setAttribute("aria-pressed", String(lang === "es"));
     $("lang-en").setAttribute("aria-pressed", String(lang === "en"));
@@ -433,15 +440,21 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
   function renderCount() {
     const n = allEntries().length;
-    let txt = (S.mode === "ready" || S.mode === "offline") && n > 0
-      ? (n === 1 ? t("count1") : t("countN").replace("{n}", n)) : "";
-    if (FAMILY && KS.updatedAt) {
-      try {
-        const d = new Intl.DateTimeFormat(t("dateLocale"), { month: "long", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date(KS.updatedAt));
-        txt = (txt ? txt + " · " : "") + t("updatedOn").replace("{d}", d);
-      } catch {}
-    }
-    $("count").textContent = txt;
+    const textFor = (l) => {
+      const tl = (k) => T[l][k];
+      let txt = (S.mode === "ready" || S.mode === "offline") && n > 0
+        ? (n === 1 ? tl("count1") : tl("countN").replace("{n}", n)) : "";
+      if (FAMILY && KS.updatedAt) {
+        try {
+          const d = new Intl.DateTimeFormat(tl("dateLocale"), { month: "long", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date(KS.updatedAt));
+          txt = (txt ? txt + " · " : "") + tl("updatedOn").replace("{d}", d);
+        } catch {}
+      }
+      return txt;
+    };
+    const wrap = el("span", { class: "bi" });
+    for (const l of ["en", "es"]) wrap.append(el("span", { lang: l, class: l === lang ? "on" : "", "aria-hidden": l === lang ? null : "true", text: textFor(l) }));
+    $("count").replaceChildren(wrap);
   }
 
   // ---------- Memories ----------
@@ -496,13 +509,13 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
     if (foreign) {
       if (showTr) {
-        meta.append(el("span", { class: "tag", text: t("translatedFrom") }));
-        meta.append(el("button", { class: "link", type: "button", text: t("showOriginal"),
-          onclick: () => { FAMILY ? S.showing.add(e.id) : S.showing.delete(e.id); renderMemories(); } }));
+        meta.append(el("span", { class: "tag" }, bi("translatedFrom")));
+        meta.append(el("button", { class: "link", type: "button",
+          onclick: () => { FAMILY ? S.showing.add(e.id) : S.showing.delete(e.id); renderMemories(); } }, bi("showOriginal")));
       } else if (tr || S.sample) {
         const busy = S.trBusy.has(e.id);
         const btn = el("button", { class: "tr-btn", type: "button", disabled: busy, onclick: () => translate(e) },
-          translateIcon(), el("span", { text: busy ? t("translating") : t("translateBtn") }));
+          translateIcon(), bi(busy ? "translating" : "translateBtn"));
         meta.append(btn);
       }
       if (S.trErr.has(e.id)) meta.append(el("span", { class: "tr-err", role: "status", text: t(S.trErr.get(e.id)) }));
@@ -517,7 +530,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           el("button", { class: "link", type: "button", text: t("cancel"), onclick: () => { S.confirmId = null; renderMemories(); } })
         ));
       } else {
-        meta.append(el("button", { class: "link", type: "button", text: t("remove"), onclick: () => { S.confirmId = e.id; renderMemories(); } }));
+        meta.append(el("button", { class: "link", type: "button", onclick: () => { S.confirmId = e.id; renderMemories(); } }, bi("remove")));
       }
     }
 
@@ -625,7 +638,7 @@ ${e.contextOriginal || ""}
     const source = S.draft.source || lang;
     const form = el("form", { class: "composer", novalidate: true });
     form.addEventListener("submit", (ev) => ev.preventDefault());
-    form.append(el("p", { class: "composer-intro", text: t("composerIntro") }));
+    form.append(el("p", { class: "composer-intro" }, bi("composerIntro")));
 
     const story = el("textarea", { id: "story", maxlength: "8000", placeholder: t("storyPh"), lang: source });
     story.value = S.draft.story; story.disabled = busy;
@@ -648,13 +661,13 @@ ${e.contextOriginal || ""}
     const statusText = S.posting ? t("posting") : (S.status.key ? t(S.status.key) : "");
 
     form.append(
-      el("div", { class: "field" }, el("label", { for: "story", text: t("storyLabel") }), story),
+      el("div", { class: "field" }, el("label", { for: "story" }, bi("storyLabel")), story),
       el("div", { class: "composer-side" },
-        el("div", { class: "field" }, el("span", { class: "label", id: "src-label", text: t("writtenIn") }), srcSeg),
-        el("div", { class: "field" }, el("label", { for: "signature", text: t("sigLabel") }), sig),
-        el("div", { class: "field" }, el("label", { for: "context", text: t("ctxLabel") }), ctx),
+        el("div", { class: "field" }, el("span", { class: "label", id: "src-label" }, bi("writtenIn")), srcSeg),
+        el("div", { class: "field" }, el("label", { for: "signature" }, bi("sigLabel")), sig),
+        el("div", { class: "field" }, el("label", { for: "context" }, bi("ctxLabel")), ctx),
         el("div", { class: "composer-actions" },
-          el("button", { class: "btn btn-primary", type: "button", id: "btn-post", disabled: busy, text: busy ? t("posting") : t("post"), onclick: doPost })
+          el("button", { class: "btn btn-primary", type: "button", id: "btn-post", disabled: busy, onclick: doPost }, bi(busy ? "posting" : "post"))
         ),
         el("p", { class: "status" + (S.status.error ? " error" : ""), role: "status", text: statusText })
       )
