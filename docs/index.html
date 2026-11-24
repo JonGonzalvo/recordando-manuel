@@ -177,6 +177,9 @@ textarea:focus, input[type="text"]:focus { border-color: var(--accent); outline:
 .empty { grid-column: 1 / -1; padding-block: 8px 32px; color: var(--muted); font-family: var(--serif); font-size: 1.125rem; margin: 0; }
 .stale { grid-column: 1 / -1; color: var(--muted); font-size: 0.875rem; margin: 0 0 4px; }
 
+.support { padding-block: 8px 40px; }
+.support p { margin: 0; max-width: 40rem; font-family: var(--serif); font-size: 1.0625rem; color: var(--muted); }
+.support a { color: var(--accent); text-underline-offset: 3px; }
 footer { border-top: 1px solid var(--rule); padding-block: 28px 48px; color: var(--muted); font-size: 0.875rem; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
@@ -246,6 +249,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       </div>
       <div class="memories" id="memories" aria-live="polite"></div>
     </div>
+  </section>
+
+  <section class="support">
+    <div class="wrap"><p id="support"></p></div>
   </section>
 </main>
 
@@ -445,9 +452,28 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     document.title = lang === "es" ? "Recordando a Manuel" : "Remembering Manuel";
     document.querySelectorAll("[data-i18n]").forEach((n) => n.replaceChildren(bi(n.dataset.i18n)));
     $("portrait").alt = t("alt");
+    renderSupport();
     $("lang-es").setAttribute("aria-pressed", String(lang === "es"));
     $("lang-en").setAttribute("aria-pressed", String(lang === "en"));
     renderCount();
+  }
+
+  // A quiet, optional line about the family's fundraiser.
+  const FUND_URL = "https://www.gofundme.com/f/todos-con-manuel-crosswhite";
+  const SUPPORT = {
+    en: ["For those who wish to support his family: ", "Todos con Manuel", " on GoFundMe."],
+    es: ["Para quienes deseen apoyar a su familia: ", "Todos con Manuel", " en GoFundMe."],
+  };
+  function renderSupport() {
+    const wrap = el("span", { class: "bi" });
+    for (const l of ["en", "es"]) {
+      const [before, name, after] = SUPPORT[l];
+      wrap.append(el("span", { lang: l, class: l === lang ? "on" : "", "aria-hidden": l === lang ? null : "true" },
+        before,
+        el("a", { href: FUND_URL, target: "_blank", rel: "noopener noreferrer", tabindex: l === lang ? null : "-1", text: name }),
+        after));
+    }
+    $("support").replaceChildren(wrap);
   }
 
   function setLang(l) {
