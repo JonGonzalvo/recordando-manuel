@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="En memoria de Manuel Crosthwaite. Recuerdos de sus compañeros de trabajo.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Remembering Manuel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a quiet memorial book. Portrait and dedication side by side, a full-width writing desk, then one column of letters. Colors taken from the pine trail in his photo. */
+:root {
+  --bg: #ECEEE8;
+  --surface: #F5F6F2;
+  --ink: #1D2520;
+  --muted: #5B655D;
+  --rule: #C9CEC3;
+  --accent: #74462A;
+  --accent-ink: #FFFFFF;
+  --moss: #50603F;
+  --field: #FFFFFF;
+  --danger: #8E2F23;
+  --display: "Libre Caslon Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121713; --surface: #19201B; --ink: #E4E7E0; --muted: #9AA398; --rule: #2D3630;
+    --accent: #C99369; --accent-ink: #1B120B; --moss: #A1B48C; --field: #0F1310; --danger: #E08A7C;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121713; --surface: #19201B; --ink: #E4E7E0; --muted: #9AA398; --rule: #2D3630;
+  --accent: #C99369; --accent-ink: #1B120B; --moss: #A1B48C; --field: #0F1310; --danger: #E08A7C;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Language bar */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 10px; }
+.bar-name { font-family: var(--display); font-size: 1.25rem; letter-spacing: 0.01em; min-width: 0; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 3px; background: var(--surface); flex: none; }
+.seg button {
+  border: 0; background: transparent; cursor: pointer;
+  padding: 6px 14px; border-radius: 999px; font-size: 0.875rem; font-weight: 500; color: var(--muted);
+}
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* Hero */
+.hero { padding-block: 56px 64px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 56px; align-items: end; }
+.portrait { margin: 0; }
+.portrait img { display: block; width: 100%; height: auto; aspect-ratio: 661 / 1017; object-fit: cover; border-radius: 3px; background: var(--rule); }
+.dedication { min-width: 0; display: grid; gap: 20px; padding-bottom: 8px; }
+.eyebrow { font-size: 0.8125rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+h1 {
+  font-family: var(--display); font-weight: 400; margin: 0;
+  font-size: clamp(3rem, 6.2vw, 6rem); line-height: 0.95; letter-spacing: -0.01em;
+}
+h1 span { display: block; }
+.lede { font-family: var(--serif); font-size: 1.25rem; line-height: 1.6; max-width: 34rem; margin: 0; text-wrap: pretty; }
+.translate-note {
+  display: flex; gap: 12px; align-items: flex-start; max-width: 34rem; margin: 0;
+  border-top: 1px solid var(--rule); padding-top: 16px; color: var(--muted); font-size: 0.9375rem;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.count { color: var(--muted); font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid transparent; border-radius: 4px; cursor: pointer;
+  padding: 11px 20px; font-size: 0.9375rem; font-weight: 600; text-decoration: none;
+}
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { filter: brightness(1.06); }
+.btn[disabled] { opacity: 0.55; cursor: progress; }
+.link { background: none; border: 0; padding: 0; cursor: pointer; color: var(--accent); font-size: 0.875rem; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Sections */
+.section { padding-block: 24px 56px; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+h2 { font-family: var(--display); font-weight: 400; font-size: 2.25rem; margin: 0; text-wrap: balance; }
+.column { max-width: 42rem; }
+
+/* Composer: full width of the page, writing on the left, signature on the right */
+.composer {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 28px;
+  display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); gap: 22px 32px; align-items: start;
+}
+.composer-intro { grid-column: 1 / -1; margin: 0; color: var(--muted); max-width: 40rem; }
+.composer-side { display: grid; gap: 18px; min-width: 0; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .field .label { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.02em; }
+textarea, input[type="text"] {
+  width: 100%; background: var(--field); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px;
+}
+textarea { font-family: var(--serif); font-size: 1.0625rem; line-height: 1.6; min-height: 288px; resize: vertical; display: block; }
+textarea:focus, input[type="text"]:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+.composer .seg { justify-self: start; }
+.composer-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding-top: 4px; }
+.status { font-size: 0.9375rem; color: var(--muted); min-height: 1.5em; margin: 0; }
+.status.error { color: var(--danger); }
+
+.notice { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 20px 24px; color: var(--muted); margin: 0; }
+
+/* Memories */
+.section-sub { margin: 6px 0 0; color: var(--muted); font-family: var(--serif); font-style: italic; font-size: 1.0625rem; }
+.memories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.memory {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 28px;
+  display: flex; flex-direction: column; gap: 22px; min-width: 0;
+}
+.memory.wide { grid-column: 1 / -1; }
+.memory.wide .memory-body { max-width: 44rem; }
+.memory-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--rule); }
+.memory-body { font-family: var(--serif); font-size: 1.125rem; line-height: 1.7; display: grid; gap: 0.9em; overflow-wrap: anywhere; }
+.memories > .empty { grid-column: 1 / -1; }
+.memory-body p { margin: 0; }
+.memory-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; align-items: baseline; }
+.sig { display: grid; gap: 2px; min-width: 0; }
+.sig-name { font-family: var(--serif); font-style: italic; font-size: 1.0625rem; }
+.sig-ctx { color: var(--muted); font-size: 0.875rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; color: var(--muted); font-size: 0.8125rem; }
+.meta .tag { color: var(--moss); }
+.tr-btn {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--rule)); background: transparent; color: var(--accent);
+  border-radius: 999px; padding: 4px 12px; font-size: 0.8125rem; font-weight: 600;
+}
+.tr-btn:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.tr-btn[disabled] { cursor: progress; opacity: 0.7; }
+.tr-btn svg { width: 14px; height: 14px; flex: none; }
+.tr-err { flex-basis: 100%; color: var(--danger); }
+.confirm { display: inline-flex; gap: 10px; align-items: baseline; color: var(--danger); }
+.link.danger { color: var(--danger); }
+.empty { padding-block: 8px 32px; color: var(--muted); font-family: var(--serif); font-size: 1.125rem; margin: 0; }
+
+footer { border-top: 1px solid var(--rule); padding-block: 28px 48px; color: var(--muted); font-size: 0.875rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (max-width: 860px) {
+  .hero { padding-block: 28px 40px; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .portrait { max-width: 360px; }
+  h1 { font-size: clamp(3rem, 11vw, 5rem); }
+}
+@media (max-width: 760px) {
+  .composer { grid-template-columns: minmax(0, 1fr); padding: 20px; }
+  textarea { min-height: 200px; }
+  .lede { font-size: 1.125rem; }
+  .memories { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .memory { padding: 22px 20px; }
+  .bar-name { font-size: 1.0625rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .memory.is-new { animation: settle 900ms ease-out; }
+  @keyframes settle { from { background: color-mix(in srgb, var(--accent) 10%, transparent); } to { background: transparent; } }
+}
+</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="wrap">
+    <span class="bar-name">Manuel Crosthwaite</span>
+    <div class="seg" role="group" aria-label="Idioma / Language">
+      <button type="button" id="lang-es" lang="es" aria-pressed="false">Español</button>
+      <button type="button" id="lang-en" lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <figure class="portrait">
+        <img src="manuel.jpg" id="portrait" width="661" height="1017" alt="">
+      </figure>
+      <div class="dedication">
+        <div class="eyebrow" data-i18n="eyebrow"></div>
+        <h1><span>Manuel</span> <span>Crosthwaite</span></h1>
+        <p class="lede" data-i18n="lede"></p>
+        <p class="translate-note" data-i18n="translateNote"></p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#share" id="hero-share" data-i18n="shareCta"></a>
+          <span class="count" id="count" aria-live="polite"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="share">
+    <div class="wrap">
+      <div class="section-head"><h2 data-i18n="shareTitle"></h2></div>
+      <div id="composer-slot"></div>
+    </div>
+  </section>
+
+  <section class="section" id="memories-section">
+    <div class="wrap">
+      <div class="section-head">
+        <div><h2 data-i18n="memoriesTitle"></h2><p class="section-sub" data-i18n="memoriesSub"></p></div>
+      </div>
+      <div class="memories" id="memories" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="footer"></span>
+    <span>En memoria de Manuel Crosthwaite</span>
+  </div>
+</footer>
+
+<!-- Keepsake copy of the memories, shown to anyone who opens the page without access to the live book (for example, his family through a public link). Filled in before the page is sent. Each entry may carry "translations": {"es": {"story", "context"}, "en": {...}}. -->
+<script type="application/json" id="keepsake">{"family":true,"updatedAt":"2026-11-24T18:09:27.588Z","entries":[{"id":"ca128817-e8cf-44c0-a6e7-12504f1bfc1f","createdAt":"2026-11-24T17:51:34.430Z","signature":"Jonathan","original":"test","contextOriginal":"","source":"en"},{"id":"b2d6cb83-1152-4faa-bfdd-b75ca43be02e","createdAt":"2026-11-24T17:51:51.464Z","signature":"Jonathan","original":"test","contextOriginal":"test","source":"en"},{"id":"a26ea9e7-1d17-4036-8ea4-eb05ebb290d4","createdAt":"2026-11-24T17:51:56.145Z","signature":"Jonathan","original":"test","contextOriginal":"test","source":"en"},{"id":"ba6bfd9b-2e23-49e3-b77a-3c376f1b8e38","createdAt":"2026-11-24T17:52:00.195Z","signature":"Jonathan","original":"test","contextOriginal":"test","source":"en"}]}</script>
+
+<script>
+(() => {
+  "use strict";
+
+  // ---------- Copy ----------
+  const T = {
+    en: {
+      eyebrow: "In memory of",
+      lede: "A place for those of us who worked with Manuel to share stories, memories, and the ways he made our days better. When we have gathered them, these pages will go to his family.",
+      translateNote: "Memories appear in the words they were written in. Under each one, a Translate button shows it in English or Spanish.",
+      shareCta: "Share a memory",
+      shareTitle: "Share a memory",
+      composerIntro: "Write in whichever language feels natural. Your memory is posted exactly as you write it, and anyone reading can translate it.",
+      storyLabel: "Your memory",
+      storyPh: "A story, something he taught you, a moment you'd like his family to know about…",
+      writtenIn: "Written in",
+      sigLabel: "Sign as",
+      sigPh: "Your name",
+      ctxLabel: "How you knew him (optional)",
+      ctxPh: "e.g. Teammate on the mobile team",
+      post: "Post memory",
+      posting: "Posting…",
+      posted: "Thank you. Your memory is in the book.",
+      needStory: "Write a memory first.",
+      needSig: "Add the name you'd like to sign with.",
+      postFailed: "Your memory wasn't saved. Check your connection and post again; your words are still here.",
+      noAccess: "You can read the memories here. To add one, ask the person who shared this page for contributor access.",
+      signedOut: "Sign in to claude.ai to read and share memories.",
+      memoriesTitle: "In our own words",
+      memoriesSub: "The stories we carry with us.",
+      loading: "Gathering memories…",
+      slow: "Memories can't be reached right now. They will appear here once the connection returns.",
+      empty: "No memories yet. Yours can be the first.",
+      emptyKeepsake: "Memories are still being gathered.",
+      translateBtn: "Translate to English",
+      translating: "Translating…",
+      translatedFrom: "Translated from Spanish",
+      showOriginal: "Show original",
+      trDeclined: "Translating needs your OK to use Claude. You can allow it from this page's Permissions menu.",
+      trFailed: "The translation didn't come through. Try again in a moment.",
+      trBusy: "Too many translations at once. Try again in a moment.",
+      remove: "Remove",
+      removeQ: "Remove this memory?",
+      removeYes: "Remove",
+      cancel: "Cancel",
+      removeFailed: "Couldn't remove it. Try again.",
+      count1: "1 memory shared",
+      countN: "{n} memories shared",
+      footer: "Gathered with love by his coworkers.",
+      ledeFamily: "Stories and memories from the people who worked with Manuel, and the ways he made our days better. New memories appear here as his coworkers write them.",
+      noteFamily: "Memories written in Spanish are shown in English. Tap Show original to read them as they were written.",
+      updatedOn: "Updated {d}",
+      alt: "Manuel Crosthwaite on horseback on a trail through a pine forest, wearing a black hat and an embroidered western shirt.",
+      dateLocale: "en-US"
+    },
+    es: {
+      eyebrow: "En memoria de",
+      lede: "Para la familia de Manuel: aquí reunimos las historias y los recuerdos que compartimos quienes trabajamos con él, y las formas en que hizo mejores nuestros días.",
+      translateNote: "Cada recuerdo aparece con las palabras con que fue escrito. Debajo de cada uno, el botón Traducir lo muestra en español o en inglés.",
+      shareCta: "Comparte un recuerdo",
+      shareTitle: "Comparte un recuerdo",
+      composerIntro: "Escribe en el idioma que te salga más natural. Tu recuerdo se publica tal como lo escribes y cualquiera que lo lea puede traducirlo.",
+      storyLabel: "Tu recuerdo",
+      storyPh: "Una historia, algo que te enseñó, un momento que te gustaría que su familia conociera…",
+      writtenIn: "Escrito en",
+      sigLabel: "Firma como",
+      sigPh: "Tu nombre",
+      ctxLabel: "Cómo lo conociste (opcional)",
+      ctxPh: "p. ej. Compañero del equipo de móvil",
+      post: "Publicar recuerdo",
+      posting: "Publicando…",
+      posted: "Gracias. Tu recuerdo ya está en el libro.",
+      needStory: "Escribe primero tu recuerdo.",
+      needSig: "Agrega el nombre con el que quieres firmar.",
+      postFailed: "Tu recuerdo no se guardó. Revisa tu conexión y vuelve a publicar; tus palabras siguen aquí.",
+      noAccess: "Puedes leer los recuerdos aquí. Para agregar uno, pide acceso de colaborador a quien compartió esta página.",
+      signedOut: "Inicia sesión en claude.ai para leer y compartir recuerdos.",
+      memoriesTitle: "En nuestras propias palabras",
+      memoriesSub: "Las historias que llevamos con nosotros.",
+      loading: "Reuniendo recuerdos…",
+      slow: "No se pueden cargar los recuerdos en este momento. Aparecerán aquí cuando vuelva la conexión.",
+      empty: "Todavía no hay recuerdos. El tuyo puede ser el primero.",
+      emptyKeepsake: "Todavía estamos reuniendo los recuerdos.",
+      translateBtn: "Traducir al español",
+      translating: "Traduciendo…",
+      translatedFrom: "Traducido del inglés",
+      showOriginal: "Ver original",
+      trDeclined: "Para traducir hace falta tu permiso para usar Claude. Puedes darlo desde el menú de Permisos de esta página.",
+      trFailed: "La traducción no llegó. Inténtalo de nuevo en un momento.",
+      trBusy: "Hay demasiadas traducciones a la vez. Inténtalo de nuevo en un momento.",
+      remove: "Quitar",
+      removeQ: "¿Quitar este recuerdo?",
+      removeYes: "Quitar",
+      cancel: "Cancelar",
+      removeFailed: "No se pudo quitar. Inténtalo de nuevo.",
+      count1: "1 recuerdo compartido",
+      countN: "{n} recuerdos compartidos",
+      footer: "Reunido con cariño por sus compañeros de trabajo.",
+      ledeFamily: "Para la familia de Manuel: aquí reunimos las historias y los recuerdos que compartimos quienes trabajamos con él, y las formas en que hizo mejores nuestros días. Los nuevos recuerdos aparecen aquí a medida que sus compañeros los escriben.",
+      noteFamily: "Los recuerdos escritos en inglés se muestran traducidos al español. Toca «Ver original» para leerlos tal como fueron escritos.",
+      updatedOn: "Actualizado: {d}",
+      alt: "Manuel Crosthwaite a caballo en un sendero entre pinos, con sombrero negro y camisa vaquera bordada.",
+      dateLocale: "es-MX"
+    }
+  };
+  const LANG_NAME = { en: "English", es: "Spanish" };
+
+  // ---------- State ----------
+  // The family copy (hosted outside Claude) carries its memories inline with "family": true.
+  const KS = (() => {
+    try { const v = JSON.parse(document.getElementById("keepsake").textContent); return v && typeof v === "object" ? v : {}; }
+    catch { return {}; }
+  })();
+  const FAMILY = KS.family === true;
+  const keepsake = Array.isArray(KS.entries) ? KS.entries : [];
+
+  let lang = (() => {
+    try { const s = localStorage.getItem("manuel-lang"); if (s === "en" || s === "es") return s; } catch {}
+    if (FAMILY) return "es";
+    return (navigator.language || "").toLowerCase().startsWith("es") ? "es" : "en";
+  })();
+
+  const S = {
+    mode: "loading",        // loading | slow | ready | offline
+    entries: [],
+    tr: {},                 // shared translations: { [entryId]: { es: {story, context}, en: {...} } }
+    db: null, sample: null,
+    uid: null, isOwner: false, canWrite: null,
+    showing: new Set(),     // entry ids currently showing their translation
+    trBusy: new Set(),
+    trErr: new Map(),
+    confirmId: null,
+    newId: null,
+    draft: { story: "", signature: "", context: "", source: "" },
+    posting: false,
+    status: { key: "", error: false },
+  };
+
+  const t = (k) => (T[lang][k] ?? T.en[k] ?? "");
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, props = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(props)) {
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else if (v !== undefined && v !== null && v !== false) n.setAttribute(k, v === true ? "" : v);
+    }
+    for (const kid of kids) if (kid) n.append(kid);
+    return n;
+  };
+  const translateIcon = () => {
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", "0 0 16 16"); svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("fill", "none"); svg.setAttribute("stroke", "currentColor"); svg.setAttribute("stroke-width", "1.4");
+    svg.setAttribute("stroke-linecap", "round"); svg.setAttribute("stroke-linejoin", "round");
+    for (const d of ["M2 3.5h7", "M5.5 2v1.5", "M7.5 3.5c-.6 2.6-2.4 4.6-5 5.6", "M4 5.5c.8 1.4 2 2.5 3.4 3.1", "M8.5 14l2.75-6 2.75 6", "M9.4 12h3.7"]) {
+      const p = document.createElementNS(ns, "path"); p.setAttribute("d", d); svg.append(p);
+    }
+    return svg;
+  };
+
+  // ---------- Static copy ----------
+  function applyCopy() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach((n) => { n.textContent = t(n.dataset.i18n); });
+    if (FAMILY) {
+      document.title = lang === "es" ? "Recordando a Manuel" : "Remembering Manuel";
+      document.querySelector('[data-i18n="lede"]').textContent = t("ledeFamily");
+      document.querySelector('[data-i18n="translateNote"]').textContent = t("noteFamily");
+    }
+    $("portrait").alt = t("alt");
+    $("lang-es").setAttribute("aria-pressed", String(lang === "es"));
+    $("lang-en").setAttribute("aria-pressed", String(lang === "en"));
+    renderCount();
+  }
+
+  function setLang(l) {
+    if (l === lang) return;
+    lang = l;
+    try { localStorage.setItem("manuel-lang", l); } catch {}
+    S.showing.clear(); S.trErr.clear();
+    applyCopy();
+    renderComposer();
+    renderMemories();
+  }
+  $("lang-es").addEventListener("click", () => setLang("es"));
+  $("lang-en").addEventListener("click", () => setLang("en"));
+
+  function allEntries() { return S.mode === "offline" ? keepsake : S.entries; }
+
+  function renderCount() {
+    const n = allEntries().length;
+    let txt = (S.mode === "ready" || S.mode === "offline") && n > 0
+      ? (n === 1 ? t("count1") : t("countN").replace("{n}", n)) : "";
+    if (FAMILY && KS.updatedAt) {
+      try {
+        const d = new Intl.DateTimeFormat(t("dateLocale"), { month: "long", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date(KS.updatedAt));
+        txt = (txt ? txt + " · " : "") + t("updatedOn").replace("{d}", d);
+      } catch {}
+    }
+    $("count").textContent = txt;
+  }
+
+  // ---------- Memories ----------
+  const fmtDate = (iso) => {
+    try { return new Intl.DateTimeFormat(t("dateLocale"), { month: "long", day: "numeric", year: "numeric" }).format(new Date(iso)); }
+    catch { return ""; }
+  };
+
+  function paragraphs(text, textLang) {
+    const body = el("div", { class: "memory-body" });
+    if (textLang) body.lang = textLang;
+    String(text || "").split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
+      .forEach((p) => body.append(el("p", { text: p })));
+    return body;
+  }
+
+  function translationOf(e, target) {
+    const x = (S.tr[e.id] && S.tr[e.id][target]) || (e.translations && e.translations[target]);
+    return x && typeof x.story === "string" && x.story.trim() ? x : null;
+  }
+
+  // Short memories pair up two to a row; a long one, or one left without a partner, takes the full width.
+  const isLong = (e) => {
+    const txt = String(e.original || "");
+    return txt.length > 650 || txt.split(/\n\s*\n/).filter((p) => p.trim()).length > 3;
+  };
+  function layoutWide(list) {
+    const wide = new Set();
+    let pending = null;
+    for (const e of list) {
+      if (isLong(e)) { if (pending) wide.add(pending.id); pending = null; wide.add(e.id); }
+      else if (pending) pending = null;
+      else pending = e;
+    }
+    if (pending) wide.add(pending.id);
+    return wide;
+  }
+
+  function memoryNode(e, wide) {
+    const src = e.source === "es" ? "es" : "en";
+    const foreign = src !== lang;
+    const tr = foreign ? translationOf(e, lang) : null;
+    // On the family copy translations show by default; S.showing then holds the ones flipped back to the original.
+    const showTr = foreign && tr && (FAMILY ? !S.showing.has(e.id) : S.showing.has(e.id));
+
+    const text = showTr ? tr.story : e.original;
+    const ctx = showTr ? (tr.context || e.contextOriginal || "") : (e.contextOriginal || "");
+
+    const meta = el("div", { class: "meta" });
+    const d = fmtDate(e.createdAt);
+    if (d) meta.append(el("span", { text: d }));
+
+    if (foreign) {
+      if (showTr) {
+        meta.append(el("span", { class: "tag", text: t("translatedFrom") }));
+        meta.append(el("button", { class: "link", type: "button", text: t("showOriginal"),
+          onclick: () => { FAMILY ? S.showing.add(e.id) : S.showing.delete(e.id); renderMemories(); } }));
+      } else if (tr || S.sample) {
+        const busy = S.trBusy.has(e.id);
+        const btn = el("button", { class: "tr-btn", type: "button", disabled: busy, onclick: () => translate(e) },
+          translateIcon(), el("span", { text: busy ? t("translating") : t("translateBtn") }));
+        meta.append(btn);
+      }
+      if (S.trErr.has(e.id)) meta.append(el("span", { class: "tr-err", role: "status", text: t(S.trErr.get(e.id)) }));
+    }
+
+    const mayRemove = S.mode === "ready" && S.db && (S.isOwner || (S.uid && e.ownerId === S.uid));
+    if (mayRemove) {
+      if (S.confirmId === e.id) {
+        meta.append(el("span", { class: "confirm" },
+          el("span", { text: t("removeQ") }),
+          el("button", { class: "link danger", type: "button", text: t("removeYes"), onclick: () => removeEntry(e) }),
+          el("button", { class: "link", type: "button", text: t("cancel"), onclick: () => { S.confirmId = null; renderMemories(); } })
+        ));
+      } else {
+        meta.append(el("button", { class: "link", type: "button", text: t("remove"), onclick: () => { S.confirmId = e.id; renderMemories(); } }));
+      }
+    }
+
+    const sig = el("div", { class: "sig" }, el("span", { class: "sig-name", text: "— " + (e.signature || "") }));
+    if (ctx) sig.append(el("span", { class: "sig-ctx", text: ctx }));
+
+    return el("article", { class: "memory" + (wide ? " wide" : "") + (S.newId === e.id ? " is-new" : ""), id: "m-" + e.id },
+      paragraphs(text, showTr ? lang : src),
+      el("div", { class: "memory-foot" }, sig, meta)
+    );
+  }
+
+  function renderMemories() {
+    const box = $("memories");
+    box.replaceChildren();
+    if (S.mode === "loading") { box.append(el("p", { class: "empty", text: t("loading") })); renderCount(); return; }
+    if (S.mode === "slow" && !S.entries.length) { box.append(el("p", { class: "empty", text: t("slow") })); renderCount(); return; }
+    const list = allEntries().slice().sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt)));
+    if (!list.length) {
+      box.append(el("p", { class: "empty", text: S.mode === "offline" ? t("emptyKeepsake") : t("empty") }));
+    } else {
+      const wide = layoutWide(list);
+      list.forEach((e) => box.append(memoryNode(e, wide.has(e.id))));
+    }
+    renderCount();
+  }
+
+  // ---------- Translation, on demand ----------
+  async function translate(e) {
+    const target = lang;
+    S.trErr.delete(e.id);
+    const cached = translationOf(e, target);
+    if (cached) { FAMILY ? S.showing.delete(e.id) : S.showing.add(e.id); renderMemories(); return; }
+    if (!S.sample || S.trBusy.has(e.id)) return;
+
+    S.trBusy.add(e.id); renderMemories();
+    const from = LANG_NAME[e.source === "es" ? "es" : "en"];
+    const to = LANG_NAME[target];
+    const prompt =
+`Translate a short memorial message from ${from} to ${to}. A coworker wrote it about Manuel Crosthwaite, a colleague who passed away. His coworkers read the page in English; his family in Mexico reads it in Spanish.
+
+- Spanish should read as natural, warm Mexican Spanish. English should read as natural American English.
+- Stay faithful to meaning and tone. Do not add, soften, embellish, explain, or leave anything out.
+- Keep names, nicknames, inside jokes, and quoted phrases as written. Keep paragraph breaks.
+- If the writer speaks to the family directly, use "ustedes" in Spanish.
+- If CONTEXT is empty, return an empty string for it.
+
+Reply with only JSON in this shape:
+{"story":"...","context":"..."}
+
+MESSAGE:
+"""
+${e.original}
+"""
+
+CONTEXT:
+"""
+${e.contextOriginal || ""}
+"""`;
+    try {
+      const r = await S.sample.json(prompt, { modelTier: "default" });
+      if (!r || typeof r.story !== "string" || !r.story.trim()) throw { code: "invalid_json" };
+      const result = { story: r.story.trim(), context: e.contextOriginal ? String(r.context || "").trim() : "" };
+      S.tr[e.id] = { ...(S.tr[e.id] || {}), [target]: result };
+      if (lang === target) S.showing.add(e.id);
+      saveTranslation(e.id, target, result);   // share it so the next reader doesn't wait
+    } catch (err) {
+      const code = err && err.code;
+      S.trErr.set(e.id, code === "not_granted" ? "trDeclined" : code === "rate_limited" ? "trBusy" : "trFailed");
+    }
+    S.trBusy.delete(e.id);
+    renderMemories();
+  }
+
+  async function saveTranslation(id, target, result) {
+    if (!S.db) return;
+    try {
+      const ref = S.db.collection("translations").doc(id);
+      const cur = await ref.get();
+      const body = cur.exists ? { ...cur.data() } : {};
+      body[target] = result;
+      await ref.set(body);
+    } catch { /* readers without write access still see their own translation */ }
+  }
+
+  // ---------- Composer ----------
+  function renderComposer() {
+    const slot = $("composer-slot");
+    const active = document.activeElement && document.activeElement.id;
+    slot.replaceChildren();
+    $("share").hidden = false; $("hero-share").hidden = false;
+
+    if (FAMILY) { $("share").hidden = true; $("hero-share").hidden = true; return; }
+    if (S.mode === "offline") {
+      if (keepsake.length) { $("share").hidden = true; $("hero-share").hidden = true; }  // family keepsake: no composer
+      slot.append(el("p", { class: "notice", text: t("signedOut") }));
+      return;
+    }
+    if (S.canWrite === false || (S.mode === "ready" && S.db && !S.uid)) {
+      slot.append(el("p", { class: "notice", text: t("noAccess") }));
+      return;
+    }
+
+    const busy = S.posting;
+    const source = S.draft.source || lang;
+    const form = el("form", { class: "composer", novalidate: true });
+    form.addEventListener("submit", (ev) => ev.preventDefault());
+    form.append(el("p", { class: "composer-intro", text: t("composerIntro") }));
+
+    const story = el("textarea", { id: "story", maxlength: "8000", placeholder: t("storyPh"), lang: source });
+    story.value = S.draft.story; story.disabled = busy;
+    story.addEventListener("input", () => { S.draft.story = story.value; saveDraft(); });
+
+    const sig = el("input", { type: "text", id: "signature", maxlength: "120", placeholder: t("sigPh"), autocomplete: "name" });
+    sig.value = S.draft.signature; sig.disabled = busy;
+    sig.addEventListener("input", () => { S.draft.signature = sig.value; saveDraft(); });
+
+    const ctx = el("input", { type: "text", id: "context", maxlength: "200", placeholder: t("ctxPh") });
+    ctx.value = S.draft.context; ctx.disabled = busy;
+    ctx.addEventListener("input", () => { S.draft.context = ctx.value; saveDraft(); });
+
+    const pick = (v) => { S.draft.source = v; saveDraft(); renderComposer(); };
+    const srcSeg = el("div", { class: "seg", role: "group", "aria-labelledby": "src-label" },
+      el("button", { type: "button", id: "src-es", lang: "es", "aria-pressed": String(source === "es"), disabled: busy, text: "Español", onclick: () => pick("es") }),
+      el("button", { type: "button", id: "src-en", lang: "en", "aria-pressed": String(source === "en"), disabled: busy, text: "English", onclick: () => pick("en") })
+    );
+
+    const statusText = S.posting ? t("posting") : (S.status.key ? t(S.status.key) : "");
+
+    form.append(
+      el("div", { class: "field" }, el("label", { for: "story", text: t("storyLabel") }), story),
+      el("div", { class: "composer-side" },
+        el("div", { class: "field" }, el("span", { class: "label", id: "src-label", text: t("writtenIn") }), srcSeg),
+        el("div", { class: "field" }, el("label", { for: "signature", text: t("sigLabel") }), sig),
+        el("div", { class: "field" }, el("label", { for: "context", text: t("ctxLabel") }), ctx),
+        el("div", { class: "composer-actions" },
+          el("button", { class: "btn btn-primary", type: "button", id: "btn-post", disabled: busy, text: busy ? t("posting") : t("post"), onclick: doPost })
+        ),
+        el("p", { class: "status" + (S.status.error ? " error" : ""), role: "status", text: statusText })
+      )
+    );
+    slot.append(form);
+
+    if (active && $(active) && !$(active).disabled) $(active).focus();
+  }
+
+  // Draft survives a reload in this browser only.
+  function saveDraft() { try { localStorage.setItem("manuel-draft", JSON.stringify(S.draft)); } catch {} }
+  try {
+    const d = JSON.parse(localStorage.getItem("manuel-draft") || "null");
+    if (d && typeof d === "object") Object.assign(S.draft, {
+      story: String(d.story || ""), signature: String(d.signature || ""), context: String(d.context || ""),
+      source: d.source === "es" || d.source === "en" ? d.source : ""
+    });
+  } catch {}
+
+  const newId = () => (crypto.randomUUID ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2)));
+
+  async function doPost() {
+    if (!S.draft.story.trim()) { S.status = { key: "needStory", error: true }; renderComposer(); $("story")?.focus(); return; }
+    if (!S.draft.signature.trim()) { S.status = { key: "needSig", error: true }; renderComposer(); $("signature")?.focus(); return; }
+    if (!S.db || !S.uid) return;
+
+    S.posting = true; S.status = { key: "", error: false }; renderComposer();
+    const entry = {
+      id: newId(),
+      createdAt: new Date().toISOString(),
+      signature: S.draft.signature.trim(),
+      original: S.draft.story.trim(),
+      contextOriginal: S.draft.context.trim(),
+      source: S.draft.source || lang
+    };
+
+    try {
+      const ref = S.db.collection("stories").doc(S.uid);
+      const cur = await ref.get();
+      const list = cur.exists && Array.isArray(cur.data().entries) ? cur.data().entries.slice() : [];
+      list.push(entry);
+      await ref.set({ entries: list });
+      S.draft.story = "";
+      saveDraft();
+      S.status = { key: "posted", error: false };
+      S.newId = entry.id;
+      S.posting = false;
+      renderComposer();
+      requestAnimationFrame(() => $("m-" + entry.id)?.scrollIntoView({ behavior: "smooth", block: "center" }));
+    } catch (e) {
+      S.posting = false;
+      if (e && e.code === "invalid_argument") { S.canWrite = false; S.status = { key: "", error: false }; }
+      else S.status = { key: "postFailed", error: true };
+      renderComposer();
+    }
+  }
+
+  async function removeEntry(e) {
+    try {
+      const ref = S.db.collection("stories").doc(e.ownerId);
+      const cur = await ref.get();
+      const list = cur.exists && Array.isArray(cur.data().entries) ? cur.data().entries.filter((x) => x.id !== e.id) : [];
+      await ref.set({ entries: list });
+      S.confirmId = null;
+    } catch {
+      S.confirmId = null;
+      S.status = { key: "removeFailed", error: true };
+      renderComposer();
+    }
+    renderMemories();
+  }
+
+  // ---------- Boot ----------
+  applyCopy();
+  renderComposer();
+  renderMemories();
+
+  const use = (name) => (window.claude && typeof window.claude.use === "function") ? window.claude.use(name).catch(() => null) : Promise.resolve(null);
+
+  (async () => {
+    if (FAMILY) { S.mode = "offline"; renderComposer(); renderMemories(); return; }
+    const [db, user, sample] = await Promise.all([use("db"), use("user"), use("sample")]);
+    S.sample = sample;
+
+    if (!db) {
+      S.mode = "offline";
+      renderComposer(); renderMemories();
+      return;
+    }
+    S.db = db;
+
+    if (user) {
+      const me = await user.me();
+      S.uid = me.id;
+      S.isOwner = !!me.isOwner;
+      S.canWrite = await user.can("data.write");
+      if (!S.draft.signature && me.name) S.draft.signature = me.name;
+    }
+
+    const timer = setTimeout(() => { if (S.mode === "loading") { S.mode = "slow"; renderMemories(); } }, 10000);
+    db.collection("stories").onSnapshot((snap) => {
+      const all = [];
+      snap.docs.forEach((d) => {
+        const data = d.data() || {};
+        (Array.isArray(data.entries) ? data.entries : []).forEach((x) => {
+          if (x && typeof x === "object" && x.id && typeof x.original === "string") all.push({ ...x, ownerId: d.id });
+        });
+      });
+      S.entries = all;
+      const before = S.mode;
+      if (!snap.metadata.fromCache) { clearTimeout(timer); S.mode = "ready"; }
+      else if (S.mode === "loading" && all.length) S.mode = "ready";
+      renderMemories();
+      if (before !== S.mode) renderComposer();   // don't rebuild the form under someone who is typing
+    }, () => {
+      clearTimeout(timer);
+      S.mode = S.entries.length ? "ready" : "slow";
+      renderMemories();
+    });
+
+    db.collection("translations").onSnapshot((snap) => {
+      const next = {};
+      snap.docs.forEach((d) => { const v = d.data(); if (v && typeof v === "object") next[d.id] = v; });
+      // keep translations this reader just made, in case their save was refused
+      for (const [id, v] of Object.entries(S.tr)) next[id] = { ...v, ...(next[id] || {}) };
+      S.tr = next;
+      if (S.mode === "ready") renderMemories();
+    }, () => {});
+
+    renderComposer();
+  })();
+})();
+</script>
+
+</body>
+</html>
