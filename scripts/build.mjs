@@ -1,4 +1,4 @@
-// Builds the family copy: src/page.html + data/memories.json -> docs/index.html
+// Builds the site: src/page.html + site.config.json + data/memories.json -> docs/index.html
 //
 //   node scripts/build.mjs
 
@@ -7,16 +7,20 @@ import { join } from "node:path";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const page = readFileSync(join(ROOT, "src/page.html"), "utf8");
-const data = JSON.parse(readFileSync(join(ROOT, "data/memories.json"), "utf8"));
+const config = JSON.parse(readFileSync(join(ROOT, "site.config.json"), "utf8"));
+let data = { entries: [] };
+try { data = JSON.parse(readFileSync(join(ROOT, "data/memories.json"), "utf8")); } catch {}
 
-const keepsake = { family: true, updatedAt: data.updatedAt || null, entries: data.entries || [] };
-const json = JSON.stringify(keepsake).replace(/</g, "\\u003c");
+const inline = (v) => JSON.stringify(v).replace(/</g, "\\u003c");
+const fill = (html, id, value) => {
+  const block = new RegExp(`<script type="application/json" id="${id}">[\\s\\S]*?</script>`);
+  if (!block.test(html)) throw new Error(`${id} block not found in src/page.html`);
+  return html.replace(block, () => `<script type="application/json" id="${id}">${inline(value)}</script>`);
+};
 
-const block = /<script type="application\/json" id="keepsake">[\s\S]*?<\/script>/;
-if (!block.test(page)) throw new Error("keepsake block not found in src/page.html");
-const html = page.replace(block, () => `<script type="application/json" id="keepsake">${json}</script>`);
+let html = fill(page, "config", { supabaseUrl: config.supabaseUrl, publishableKey: config.publishableKey });
+html = fill(html, "keepsake", { updatedAt: data.updatedAt || null, entries: data.entries || [] });
 
-// The Claude viewer wraps the page in its own skeleton; outside it we add one.
 const cut = html.indexOf("</style>") + "</style>".length;
 const out = `<!doctype html>
 <html lang="es" data-theme="dark">
@@ -39,4 +43,4 @@ writeFileSync(join(ROOT, "docs/index.html"), out);
 copyFileSync(join(ROOT, "src/manuel.jpg"), join(ROOT, "docs/manuel.jpg"));
 writeFileSync(join(ROOT, "docs/.nojekyll"), "");
 writeFileSync(join(ROOT, "docs/robots.txt"), "User-agent: *\nDisallow: /\n");
-console.error(`built docs/index.html with ${keepsake.entries.length} memories`);
+console.error(`built docs/index.html (saved copy: ${(data.entries || []).length} memories)`);

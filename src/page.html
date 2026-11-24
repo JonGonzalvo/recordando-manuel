@@ -4,8 +4,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-/* Layout: a quiet memorial book. Portrait and dedication side by side, a full-width writing desk, then one column of letters. Colors taken from the pine trail in his photo. */
-/* Inside Claude the page follows each viewer's theme; the family copy sets data-theme="dark" on <html> and is always dark. */
+/* Layout: a quiet memorial book. Portrait and dedication side by side, a full-width writing desk, then memories two to a row. Colors taken from the pine trail in his photo. The built page sets data-theme="dark". */
 :root {
   --bg: #ECEEE8;
   --surface: #F5F6F2;
@@ -115,7 +114,7 @@ h1 span { display: block; }
 .section { padding-block: 24px 56px; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
 h2 { font-family: var(--display); font-weight: 400; font-size: 2.25rem; margin: 0; text-wrap: balance; }
-.column { max-width: 42rem; }
+.section-sub { margin: 6px 0 0; color: var(--muted); font-family: var(--serif); font-style: italic; font-size: 1.0625rem; }
 
 /* Composer: full width of the page, writing on the left, signature on the right */
 .composer {
@@ -135,11 +134,9 @@ textarea:focus, input[type="text"]:focus { border-color: var(--accent); outline:
 .composer-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding-top: 4px; }
 .status { font-size: 0.9375rem; color: var(--muted); min-height: 1.5em; margin: 0; }
 .status.error { color: var(--danger); }
-
-.notice { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 20px 24px; color: var(--muted); margin: 0; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
 /* Memories */
-.section-sub { margin: 6px 0 0; color: var(--muted); font-family: var(--serif); font-style: italic; font-size: 1.0625rem; }
 .memories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .memory {
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 28px;
@@ -147,11 +144,12 @@ textarea:focus, input[type="text"]:focus { border-color: var(--accent); outline:
 }
 .memory.wide { grid-column: 1 / -1; }
 .memory.wide .memory-body { max-width: 44rem; }
-.memory-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--rule); }
 .memory-body { font-family: var(--serif); font-size: 1.125rem; line-height: 1.7; display: grid; gap: 0.9em; overflow-wrap: anywhere; }
-.memories > .empty { grid-column: 1 / -1; }
 .memory-body p { margin: 0; }
-.memory-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; align-items: baseline; }
+.memory-foot {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--rule);
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; align-items: baseline;
+}
 .sig { display: grid; gap: 2px; min-width: 0; }
 .sig-name { font-family: var(--serif); font-style: italic; font-size: 1.0625rem; }
 .sig-ctx { color: var(--muted); font-size: 0.875rem; }
@@ -168,7 +166,8 @@ textarea:focus, input[type="text"]:focus { border-color: var(--accent); outline:
 .tr-err { flex-basis: 100%; color: var(--danger); }
 .confirm { display: inline-flex; gap: 10px; align-items: baseline; color: var(--danger); }
 .link.danger { color: var(--danger); }
-.empty { padding-block: 8px 32px; color: var(--muted); font-family: var(--serif); font-size: 1.125rem; margin: 0; }
+.empty { grid-column: 1 / -1; padding-block: 8px 32px; color: var(--muted); font-family: var(--serif); font-size: 1.125rem; margin: 0; }
+.stale { grid-column: 1 / -1; color: var(--muted); font-size: 0.875rem; margin: 0 0 4px; }
 
 footer { border-top: 1px solid var(--rule); padding-block: 28px 48px; color: var(--muted); font-size: 0.875rem; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
@@ -189,7 +188,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 }
 @media (prefers-reduced-motion: no-preference) {
   .memory.is-new { animation: settle 900ms ease-out; }
-  @keyframes settle { from { background: color-mix(in srgb, var(--accent) 10%, transparent); } to { background: transparent; } }
+  @keyframes settle { from { background: color-mix(in srgb, var(--accent) 10%, transparent); } to { background: var(--surface); } }
 }
 </style>
 
@@ -212,8 +211,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <div class="dedication">
         <div class="eyebrow" data-i18n="eyebrow"></div>
         <h1><span>Manuel</span> <span>Crosthwaite</span></h1>
-        <p class="lede" data-i18n="lede" data-i18n-family="ledeFamily"></p>
-        <p class="translate-note" data-i18n="translateNote" data-i18n-family="noteFamily"></p>
+        <p class="lede" data-i18n="lede"></p>
+        <p class="translate-note" data-i18n="translateNote"></p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#share" id="hero-share" data-i18n="shareCta"></a>
           <span class="count" id="count" aria-live="polite"></span>
@@ -246,7 +245,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   </div>
 </footer>
 
-<!-- Keepsake copy of the memories, shown to anyone who opens the page without access to the live book (for example, his family through a public link). Filled in before the page is sent. Each entry may carry "translations": {"es": {"story", "context"}, "en": {...}}. -->
+<!-- Filled in by scripts/build.mjs: where the memories live, and a saved copy shown if they can't be reached. -->
+<script type="application/json" id="config">{"supabaseUrl":"","publishableKey":""}</script>
 <script type="application/json" id="keepsake">{"entries":[]}</script>
 
 <script>
@@ -257,11 +257,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   const T = {
     en: {
       eyebrow: "In memory of",
-      lede: "A place for those of us who worked with Manuel to share stories, memories, and the ways he made our days better. When we have gathered them, these pages will go to his family.",
-      translateNote: "Memories appear in the words they were written in. Under each one, a Translate button shows it in English or Spanish.",
+      lede: "A place for everyone who knew Manuel to share stories, memories, and the ways he made our days better. His family reads these pages too, in Spanish.",
+      translateNote: "Memories appear in the words they were written in. Under each one written in Spanish, a Translate button shows it in English.",
       shareCta: "Share a memory",
       shareTitle: "Share a memory",
-      composerIntro: "Write in whichever language feels natural. Your memory is posted exactly as you write it, and anyone reading can translate it.",
+      composerIntro: "Write in whichever language feels natural. Your memory is posted exactly as you write it, and it is translated so everyone can read it.",
       storyLabel: "Your memory",
       storyPh: "A story, something he taught you, a moment you'd like his family to know about…",
       writtenIn: "Written in",
@@ -271,46 +271,39 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       ctxPh: "e.g. Teammate on the mobile team",
       post: "Post memory",
       posting: "Posting…",
-      posted: "Thank you. Your memory is in the book.",
+      posted: "Thank you. Your memory is in the book. You can remove it later from this same browser.",
       needStory: "Write a memory first.",
       needSig: "Add the name you'd like to sign with.",
       postFailed: "Your memory wasn't saved. Check your connection and post again; your words are still here.",
-      noAccess: "You can read the memories here. To add one, ask the person who shared this page for contributor access.",
-      signedOut: "Sign in to claude.ai to read and share memories.",
       memoriesTitle: "In our own words",
       memoriesSub: "The stories we carry with us.",
       loading: "Gathering memories…",
-      slow: "Memories can't be reached right now. They will appear here once the connection returns.",
+      stale: "Showing a saved copy. The newest memories may be missing; they'll appear once the connection returns.",
       empty: "No memories yet. Yours can be the first.",
-      emptyKeepsake: "Memories are still being gathered.",
       translateBtn: "Translate to English",
       translating: "Translating…",
       translatedFrom: "Translated from Spanish",
       showOriginal: "Show original",
-      trDeclined: "Translating needs your OK to use Claude. You can allow it from this page's Permissions menu.",
       trFailed: "The translation didn't come through. Try again in a moment.",
       trBusy: "Too many translations at once. Try again in a moment.",
       remove: "Remove",
-      removeQ: "Remove this memory?",
+      removeQ: "Remove your memory?",
       removeYes: "Remove",
       cancel: "Cancel",
       removeFailed: "Couldn't remove it. Try again.",
       count1: "1 memory shared",
       countN: "{n} memories shared",
       footer: "Gathered with love by his coworkers.",
-      ledeFamily: "Stories and memories from the people who worked with Manuel, and the ways he made our days better. New memories appear here as his coworkers write them.",
-      noteFamily: "Memories written in Spanish are shown in English. Tap Show original to read them as they were written.",
-      updatedOn: "Updated {d}",
       alt: "Manuel Crosthwaite on horseback on a trail through a pine forest, wearing a black hat and an embroidered western shirt.",
       dateLocale: "en-US"
     },
     es: {
       eyebrow: "En memoria de",
-      lede: "Para la familia de Manuel: aquí reunimos las historias y los recuerdos que compartimos quienes trabajamos con él, y las formas en que hizo mejores nuestros días.",
-      translateNote: "Cada recuerdo aparece con las palabras con que fue escrito. Debajo de cada uno, el botón Traducir lo muestra en español o en inglés.",
+      lede: "Para la familia de Manuel: aquí reunimos las historias y los recuerdos de quienes trabajamos con él, y las formas en que hizo mejores nuestros días. Ustedes también pueden dejar aquí sus propios recuerdos.",
+      translateNote: "Los recuerdos escritos en inglés se muestran traducidos al español. Toca «Ver original» para leerlos tal como fueron escritos.",
       shareCta: "Comparte un recuerdo",
       shareTitle: "Comparte un recuerdo",
-      composerIntro: "Escribe en el idioma que te salga más natural. Tu recuerdo se publica tal como lo escribes y cualquiera que lo lea puede traducirlo.",
+      composerIntro: "Escribe en el idioma que te salga más natural. Tu recuerdo se publica tal como lo escribes y se traduce para que todos puedan leerlo.",
       storyLabel: "Tu recuerdo",
       storyPh: "Una historia, algo que te enseñó, un momento que te gustaría que su familia conociera…",
       writtenIn: "Escrito en",
@@ -320,69 +313,65 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       ctxPh: "p. ej. Compañero del equipo de móvil",
       post: "Publicar recuerdo",
       posting: "Publicando…",
-      posted: "Gracias. Tu recuerdo ya está en el libro.",
+      posted: "Gracias. Tu recuerdo ya está en el libro. Puedes quitarlo después desde este mismo navegador.",
       needStory: "Escribe primero tu recuerdo.",
       needSig: "Agrega el nombre con el que quieres firmar.",
       postFailed: "Tu recuerdo no se guardó. Revisa tu conexión y vuelve a publicar; tus palabras siguen aquí.",
-      noAccess: "Puedes leer los recuerdos aquí. Para agregar uno, pide acceso de colaborador a quien compartió esta página.",
-      signedOut: "Inicia sesión en claude.ai para leer y compartir recuerdos.",
       memoriesTitle: "En nuestras propias palabras",
       memoriesSub: "Las historias que llevamos con nosotros.",
       loading: "Reuniendo recuerdos…",
-      slow: "No se pueden cargar los recuerdos en este momento. Aparecerán aquí cuando vuelva la conexión.",
+      stale: "Mostrando una copia guardada. Puede que falten los recuerdos más recientes; aparecerán cuando vuelva la conexión.",
       empty: "Todavía no hay recuerdos. El tuyo puede ser el primero.",
-      emptyKeepsake: "Todavía estamos reuniendo los recuerdos.",
       translateBtn: "Traducir al español",
       translating: "Traduciendo…",
       translatedFrom: "Traducido del inglés",
       showOriginal: "Ver original",
-      trDeclined: "Para traducir hace falta tu permiso para usar Claude. Puedes darlo desde el menú de Permisos de esta página.",
       trFailed: "La traducción no llegó. Inténtalo de nuevo en un momento.",
       trBusy: "Hay demasiadas traducciones a la vez. Inténtalo de nuevo en un momento.",
       remove: "Quitar",
-      removeQ: "¿Quitar este recuerdo?",
+      removeQ: "¿Quitar tu recuerdo?",
       removeYes: "Quitar",
       cancel: "Cancelar",
       removeFailed: "No se pudo quitar. Inténtalo de nuevo.",
       count1: "1 recuerdo compartido",
       countN: "{n} recuerdos compartidos",
       footer: "Reunido con cariño por sus compañeros de trabajo.",
-      ledeFamily: "Para la familia de Manuel: aquí reunimos las historias y los recuerdos que compartimos quienes trabajamos con él, y las formas en que hizo mejores nuestros días. Los nuevos recuerdos aparecen aquí a medida que sus compañeros los escriben.",
-      noteFamily: "Los recuerdos escritos en inglés se muestran traducidos al español. Toca «Ver original» para leerlos tal como fueron escritos.",
-      updatedOn: "Actualizado: {d}",
       alt: "Manuel Crosthwaite a caballo en un sendero entre pinos, con sombrero negro y camisa vaquera bordada.",
       dateLocale: "es-MX"
     }
   };
-  const LANG_NAME = { en: "English", es: "Spanish" };
 
-  // ---------- State ----------
-  // The family copy (hosted outside Claude) carries its memories inline with "family": true.
-  const KS = (() => {
-    try { const v = JSON.parse(document.getElementById("keepsake").textContent); return v && typeof v === "object" ? v : {}; }
-    catch { return {}; }
-  })();
-  const FAMILY = KS.family === true;
+  // ---------- Setup ----------
+  const readJSON = (id, fallback) => {
+    try { const v = JSON.parse(document.getElementById(id).textContent); return v && typeof v === "object" ? v : fallback; }
+    catch { return fallback; }
+  };
+  const CFG = readJSON("config", {});
+  const KS = readJSON("keepsake", {});
   const keepsake = Array.isArray(KS.entries) ? KS.entries : [];
 
+  const store = {
+    get(k, d) { try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v ?? d; } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  };
+
   let lang = (() => {
-    try { const s = localStorage.getItem("manuel-lang"); if (s === "en" || s === "es") return s; } catch {}
-    if (FAMILY) return "es";
+    const s = store.get("manuel-lang", null);
+    if (s === "en" || s === "es") return s;
     return (navigator.language || "").toLowerCase().startsWith("es") ? "es" : "en";
   })();
 
   const S = {
-    mode: "loading",        // loading | slow | ready | offline
+    mode: "loading",        // loading | live | stale
     entries: [],
-    tr: {},                 // shared translations: { [entryId]: { es: {story, context}, en: {...} } }
-    db: null, sample: null,
-    uid: null, isOwner: false, canWrite: null,
-    showing: new Set(),     // entry ids currently showing their translation
+    mine: store.get("manuel-mine", {}),   // { [memoryId]: deleteToken } for memories posted from this browser
+    flipped: new Set(),     // ids toggled away from their default view
     trBusy: new Set(),
+    trTried: new Set(),     // auto-translations already requested this visit
     trErr: new Map(),
     confirmId: null,
     newId: null,
-    draft: { story: "", signature: "", context: "", source: "" },
+    draft: Object.assign({ story: "", signature: "", context: "", source: "" }, store.get("manuel-draft", {})),
     posting: false,
     status: { key: "", error: false },
   };
@@ -401,15 +390,12 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     return n;
   };
   // Both languages stacked in one cell; only the current one is visible (see .bi in the styles).
-  const bi = (key, fill) => {
+  const biText = (textFor) => {
     const wrap = el("span", { class: "bi" });
-    for (const l of ["en", "es"]) {
-      let s = T[l][key] ?? "";
-      if (fill) for (const [k, v] of Object.entries(fill)) s = s.replace("{" + k + "}", v);
-      wrap.append(el("span", { lang: l, class: l === lang ? "on" : "", "aria-hidden": l === lang ? null : "true", text: s }));
-    }
+    for (const l of ["en", "es"]) wrap.append(el("span", { lang: l, class: l === lang ? "on" : "", "aria-hidden": l === lang ? null : "true", text: textFor(l) }));
     return wrap;
   };
+  const bi = (key) => biText((l) => T[l][key] ?? "");
   const translateIcon = () => {
     const ns = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(ns, "svg");
@@ -422,14 +408,31 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     return svg;
   };
 
+  // ---------- Supabase ----------
+  const api = (path, opts = {}) => fetch(CFG.supabaseUrl + path, {
+    ...opts,
+    headers: { apikey: CFG.publishableKey, "Content-Type": "application/json", ...(opts.headers || {}) },
+  });
+  const toEntry = (r) => ({
+    id: r.id, createdAt: r.created_at, signature: r.signature || "",
+    original: r.original || "", contextOriginal: r.context || "",
+    source: r.source === "es" ? "es" : "en", translations: r.translations || {},
+  });
+  async function loadMemories() {
+    const res = await api("/rest/v1/memories?select=id,created_at,signature,context,original,source,translations&order=created_at.asc&limit=1000");
+    if (!res.ok) throw new Error("load " + res.status);
+    return (await res.json()).map(toEntry);
+  }
+  const sha256hex = async (s) => [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)))]
+    .map((b) => b.toString(16).padStart(2, "0")).join("");
+  const uuid = () => (crypto.randomUUID ? crypto.randomUUID()
+    : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)));
+
   // ---------- Static copy ----------
   function applyCopy() {
     document.documentElement.lang = lang;
-    document.querySelectorAll("[data-i18n]").forEach((n) => {
-      const key = (FAMILY && n.dataset.i18nFamily) || n.dataset.i18n;
-      n.replaceChildren(bi(key));
-    });
-    if (FAMILY) document.title = lang === "es" ? "Recordando a Manuel" : "Remembering Manuel";
+    document.title = lang === "es" ? "Recordando a Manuel" : "Remembering Manuel";
+    document.querySelectorAll("[data-i18n]").forEach((n) => n.replaceChildren(bi(n.dataset.i18n)));
     $("portrait").alt = t("alt");
     $("lang-es").setAttribute("aria-pressed", String(lang === "es"));
     $("lang-en").setAttribute("aria-pressed", String(lang === "en"));
@@ -439,8 +442,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   function setLang(l) {
     if (l === lang) return;
     lang = l;
-    try { localStorage.setItem("manuel-lang", l); } catch {}
-    S.showing.clear(); S.trErr.clear();
+    store.set("manuel-lang", l);
+    S.flipped.clear(); S.trErr.clear();
     applyCopy();
     renderComposer();
     renderMemories();
@@ -448,25 +451,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   $("lang-es").addEventListener("click", () => setLang("es"));
   $("lang-en").addEventListener("click", () => setLang("en"));
 
-  function allEntries() { return S.mode === "offline" ? keepsake : S.entries; }
-
   function renderCount() {
-    const n = allEntries().length;
-    const textFor = (l) => {
-      const tl = (k) => T[l][k];
-      let txt = (S.mode === "ready" || S.mode === "offline") && n > 0
-        ? (n === 1 ? tl("count1") : tl("countN").replace("{n}", n)) : "";
-      if (FAMILY && KS.updatedAt) {
-        try {
-          const d = new Intl.DateTimeFormat(tl("dateLocale"), { month: "long", day: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date(KS.updatedAt));
-          txt = (txt ? txt + " · " : "") + tl("updatedOn").replace("{d}", d);
-        } catch {}
-      }
-      return txt;
-    };
-    const wrap = el("span", { class: "bi" });
-    for (const l of ["en", "es"]) wrap.append(el("span", { lang: l, class: l === lang ? "on" : "", "aria-hidden": l === lang ? null : "true", text: textFor(l) }));
-    $("count").replaceChildren(wrap);
+    const n = S.entries.length;
+    $("count").replaceChildren(biText((l) => (S.mode !== "loading" && n > 0)
+      ? (n === 1 ? T[l].count1 : T[l].countN.replace("{n}", n)) : ""));
   }
 
   // ---------- Memories ----------
@@ -476,23 +464,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   };
 
   function paragraphs(text, textLang) {
-    const body = el("div", { class: "memory-body" });
-    if (textLang) body.lang = textLang;
+    const body = el("div", { class: "memory-body", lang: textLang });
     String(text || "").split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
       .forEach((p) => body.append(el("p", { text: p })));
     return body;
   }
 
-  function translationOf(e, target) {
-    const x = (S.tr[e.id] && S.tr[e.id][target]) || (e.translations && e.translations[target]);
+  const translationOf = (e, target) => {
+    const x = e.translations && e.translations[target];
     return x && typeof x.story === "string" && x.story.trim() ? x : null;
-  }
+  };
 
   // Short memories pair up two to a row; a long one, or one left without a partner, takes the full width.
-  const isLong = (e) => {
-    const txt = String(e.original || "");
-    return txt.length > 650 || txt.split(/\n\s*\n/).filter((p) => p.trim()).length > 3;
-  };
+  const isLong = (e) => e.original.length > 650 || e.original.split(/\n\s*\n/).filter((p) => p.trim()).length > 3;
   function layoutWide(list) {
     const wide = new Set();
     let pending = null;
@@ -505,52 +489,54 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     return wide;
   }
 
+  // In Spanish, English memories show translated by default; in English, Spanish ones show a Translate button.
+  const autoTranslate = () => lang === "es";
+
   function memoryNode(e, wide) {
-    const src = e.source === "es" ? "es" : "en";
-    const foreign = src !== lang;
+    const foreign = e.source !== lang;
     const tr = foreign ? translationOf(e, lang) : null;
-    // On the family copy translations show by default; S.showing then holds the ones flipped back to the original.
-    const showTr = foreign && tr && (FAMILY ? !S.showing.has(e.id) : S.showing.has(e.id));
+    const wantTr = autoTranslate() ? !S.flipped.has(e.id) : S.flipped.has(e.id);
+    const showTr = foreign && tr && wantTr;
 
     const text = showTr ? tr.story : e.original;
-    const ctx = showTr ? (tr.context || e.contextOriginal || "") : (e.contextOriginal || "");
+    const ctx = showTr ? (tr.context || e.contextOriginal) : e.contextOriginal;
 
     const meta = el("div", { class: "meta" });
     const d = fmtDate(e.createdAt);
     if (d) meta.append(el("span", { text: d }));
 
     if (foreign) {
+      const busy = S.trBusy.has(e.id);
       if (showTr) {
         meta.append(el("span", { class: "tag" }, bi("translatedFrom")));
         meta.append(el("button", { class: "link", type: "button",
-          onclick: () => { FAMILY ? S.showing.add(e.id) : S.showing.delete(e.id); renderMemories(); } }, bi("showOriginal")));
-      } else if (tr || S.sample) {
-        const busy = S.trBusy.has(e.id);
-        const btn = el("button", { class: "tr-btn", type: "button", disabled: busy, onclick: () => translate(e) },
-          translateIcon(), bi(busy ? "translating" : "translateBtn"));
-        meta.append(btn);
+          onclick: () => { autoTranslate() ? S.flipped.add(e.id) : S.flipped.delete(e.id); renderMemories(); } }, bi("showOriginal")));
+      } else if (busy) {
+        meta.append(el("span", { class: "tag" }, bi("translating")));
+      } else {
+        meta.append(el("button", { class: "tr-btn", type: "button", onclick: () => translate(e, true) },
+          translateIcon(), bi("translateBtn")));
       }
-      if (S.trErr.has(e.id)) meta.append(el("span", { class: "tr-err", role: "status", text: t(S.trErr.get(e.id)) }));
+      if (S.trErr.has(e.id)) meta.append(el("span", { class: "tr-err", role: "status" }, bi(S.trErr.get(e.id))));
     }
 
-    const mayRemove = S.mode === "ready" && S.db && (S.isOwner || (S.uid && e.ownerId === S.uid));
-    if (mayRemove) {
+    if (S.mine[e.id] && S.mode === "live") {
       if (S.confirmId === e.id) {
         meta.append(el("span", { class: "confirm" },
-          el("span", { text: t("removeQ") }),
-          el("button", { class: "link danger", type: "button", text: t("removeYes"), onclick: () => removeEntry(e) }),
-          el("button", { class: "link", type: "button", text: t("cancel"), onclick: () => { S.confirmId = null; renderMemories(); } })
+          bi("removeQ"),
+          el("button", { class: "link danger", type: "button", onclick: () => removeEntry(e) }, bi("removeYes")),
+          el("button", { class: "link", type: "button", onclick: () => { S.confirmId = null; renderMemories(); } }, bi("cancel"))
         ));
       } else {
         meta.append(el("button", { class: "link", type: "button", onclick: () => { S.confirmId = e.id; renderMemories(); } }, bi("remove")));
       }
     }
 
-    const sig = el("div", { class: "sig" }, el("span", { class: "sig-name", text: "— " + (e.signature || "") }));
+    const sig = el("div", { class: "sig" }, el("span", { class: "sig-name", text: "— " + e.signature }));
     if (ctx) sig.append(el("span", { class: "sig-ctx", text: ctx }));
 
     return el("article", { class: "memory" + (wide ? " wide" : "") + (S.newId === e.id ? " is-new" : ""), id: "m-" + e.id },
-      paragraphs(text, showTr ? lang : src),
+      paragraphs(text, showTr ? lang : e.source),
       el("div", { class: "memory-foot" }, sig, meta)
     );
   }
@@ -558,74 +544,40 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   function renderMemories() {
     const box = $("memories");
     box.replaceChildren();
-    if (S.mode === "loading") { box.append(el("p", { class: "empty", text: t("loading") })); renderCount(); return; }
-    if (S.mode === "slow" && !S.entries.length) { box.append(el("p", { class: "empty", text: t("slow") })); renderCount(); return; }
-    const list = allEntries().slice().sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt)));
-    if (!list.length) {
-      box.append(el("p", { class: "empty", text: S.mode === "offline" ? t("emptyKeepsake") : t("empty") }));
-    } else {
-      const wide = layoutWide(list);
-      list.forEach((e) => box.append(memoryNode(e, wide.has(e.id))));
-    }
+    if (S.mode === "stale") box.append(el("p", { class: "stale" }, bi("stale")));
+    if (S.mode === "loading" && !S.entries.length) { box.append(el("p", { class: "empty" }, bi("loading"))); renderCount(); return; }
+    const list = S.entries.slice().sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt)));
+    if (!list.length) box.append(el("p", { class: "empty" }, bi("empty")));
+    const wide = layoutWide(list);
+    list.forEach((e) => box.append(memoryNode(e, wide.has(e.id))));
     renderCount();
+    if (autoTranslate() && S.mode === "live") {
+      list.filter((e) => e.source !== lang && !translationOf(e, lang) && !S.trTried.has(e.id)).forEach((e) => translate(e, false));
+    }
   }
 
-  // ---------- Translation, on demand ----------
-  async function translate(e) {
+  // ---------- Translation ----------
+  async function translate(e, byClick) {
     const target = lang;
     S.trErr.delete(e.id);
-    const cached = translationOf(e, target);
-    if (cached) { FAMILY ? S.showing.delete(e.id) : S.showing.add(e.id); renderMemories(); return; }
-    if (!S.sample || S.trBusy.has(e.id)) return;
-
+    if (translationOf(e, target)) {
+      autoTranslate() ? S.flipped.delete(e.id) : S.flipped.add(e.id);
+      renderMemories(); return;
+    }
+    if (S.trBusy.has(e.id) || S.mode !== "live") return;
+    S.trTried.add(e.id);
     S.trBusy.add(e.id); renderMemories();
-    const from = LANG_NAME[e.source === "es" ? "es" : "en"];
-    const to = LANG_NAME[target];
-    const prompt =
-`Translate a short memorial message from ${from} to ${to}. A coworker wrote it about Manuel Crosthwaite, a colleague who passed away. His coworkers read the page in English; his family in Mexico reads it in Spanish.
-
-- Spanish should read as natural, warm Mexican Spanish. English should read as natural American English.
-- Stay faithful to meaning and tone. Do not add, soften, embellish, explain, or leave anything out.
-- Keep names, nicknames, inside jokes, and quoted phrases as written. Keep paragraph breaks.
-- If the writer speaks to the family directly, use "ustedes" in Spanish.
-- If CONTEXT is empty, return an empty string for it.
-
-Reply with only JSON in this shape:
-{"story":"...","context":"..."}
-
-MESSAGE:
-"""
-${e.original}
-"""
-
-CONTEXT:
-"""
-${e.contextOriginal || ""}
-"""`;
     try {
-      const r = await S.sample.json(prompt, { modelTier: "default" });
-      if (!r || typeof r.story !== "string" || !r.story.trim()) throw { code: "invalid_json" };
-      const result = { story: r.story.trim(), context: e.contextOriginal ? String(r.context || "").trim() : "" };
-      S.tr[e.id] = { ...(S.tr[e.id] || {}), [target]: result };
-      if (lang === target) S.showing.add(e.id);
-      saveTranslation(e.id, target, result);   // share it so the next reader doesn't wait
+      const res = await api("/functions/v1/translate", { method: "POST", body: JSON.stringify({ id: e.id, target }) });
+      if (!res.ok) throw { status: res.status };
+      const r = await res.json();
+      e.translations = { ...(e.translations || {}), [target]: { story: String(r.story || ""), context: String(r.context || "") } };
+      if (byClick && !autoTranslate()) S.flipped.add(e.id);
     } catch (err) {
-      const code = err && err.code;
-      S.trErr.set(e.id, code === "not_granted" ? "trDeclined" : code === "rate_limited" ? "trBusy" : "trFailed");
+      if (byClick) S.trErr.set(e.id, err && err.status === 429 ? "trBusy" : "trFailed");
     }
     S.trBusy.delete(e.id);
     renderMemories();
-  }
-
-  async function saveTranslation(id, target, result) {
-    if (!S.db) return;
-    try {
-      const ref = S.db.collection("translations").doc(id);
-      const cur = await ref.get();
-      const body = cur.exists ? { ...cur.data() } : {};
-      body[target] = result;
-      await ref.set(body);
-    } catch { /* readers without write access still see their own translation */ }
   }
 
   // ---------- Composer ----------
@@ -633,18 +585,6 @@ ${e.contextOriginal || ""}
     const slot = $("composer-slot");
     const active = document.activeElement && document.activeElement.id;
     slot.replaceChildren();
-    $("share").hidden = false; $("hero-share").hidden = false;
-
-    if (FAMILY) { $("share").hidden = true; $("hero-share").hidden = true; return; }
-    if (S.mode === "offline") {
-      if (keepsake.length) { $("share").hidden = true; $("hero-share").hidden = true; }  // family keepsake: no composer
-      slot.append(el("p", { class: "notice", text: t("signedOut") }));
-      return;
-    }
-    if (S.canWrite === false || (S.mode === "ready" && S.db && !S.uid)) {
-      slot.append(el("p", { class: "notice", text: t("noAccess") }));
-      return;
-    }
 
     const busy = S.posting;
     const source = S.draft.source || lang;
@@ -652,6 +592,7 @@ ${e.contextOriginal || ""}
     form.addEventListener("submit", (ev) => ev.preventDefault());
     form.append(el("p", { class: "composer-intro" }, bi("composerIntro")));
 
+    const saveDraft = () => store.set("manuel-draft", S.draft);
     const story = el("textarea", { id: "story", maxlength: "8000", placeholder: t("storyPh"), lang: source });
     story.value = S.draft.story; story.disabled = busy;
     story.addEventListener("input", () => { S.draft.story = story.value; saveDraft(); });
@@ -664,13 +605,17 @@ ${e.contextOriginal || ""}
     ctx.value = S.draft.context; ctx.disabled = busy;
     ctx.addEventListener("input", () => { S.draft.context = ctx.value; saveDraft(); });
 
+    // Left empty by people; bots that fill every field get a quiet no-op.
+    const hp = el("input", { type: "text", id: "website", name: "website", tabindex: "-1", autocomplete: "off" });
+
     const pick = (v) => { S.draft.source = v; saveDraft(); renderComposer(); };
     const srcSeg = el("div", { class: "seg", role: "group", "aria-labelledby": "src-label" },
       el("button", { type: "button", id: "src-es", lang: "es", "aria-pressed": String(source === "es"), disabled: busy, text: "Español", onclick: () => pick("es") }),
       el("button", { type: "button", id: "src-en", lang: "en", "aria-pressed": String(source === "en"), disabled: busy, text: "English", onclick: () => pick("en") })
     );
 
-    const statusText = S.posting ? t("posting") : (S.status.key ? t(S.status.key) : "");
+    const status = el("p", { class: "status" + (S.status.error ? " error" : ""), role: "status" });
+    if (S.status.key) status.append(bi(S.status.key));
 
     form.append(
       el("div", { class: "field" }, el("label", { for: "story" }, bi("storyLabel")), story),
@@ -678,10 +623,11 @@ ${e.contextOriginal || ""}
         el("div", { class: "field" }, el("span", { class: "label", id: "src-label" }, bi("writtenIn")), srcSeg),
         el("div", { class: "field" }, el("label", { for: "signature" }, bi("sigLabel")), sig),
         el("div", { class: "field" }, el("label", { for: "context" }, bi("ctxLabel")), ctx),
+        el("div", { class: "hp", "aria-hidden": "true" }, el("label", { for: "website", text: "Website" }), hp),
         el("div", { class: "composer-actions" },
-          el("button", { class: "btn btn-primary", type: "button", id: "btn-post", disabled: busy, onclick: doPost }, bi(busy ? "posting" : "post"))
+          el("button", { class: "btn btn-primary", type: "button", id: "btn-post", disabled: busy, onclick: () => doPost(hp.value) }, bi(busy ? "posting" : "post"))
         ),
-        el("p", { class: "status" + (S.status.error ? " error" : ""), role: "status", text: statusText })
+        status
       )
     );
     slot.append(form);
@@ -689,127 +635,86 @@ ${e.contextOriginal || ""}
     if (active && $(active) && !$(active).disabled) $(active).focus();
   }
 
-  // Draft survives a reload in this browser only.
-  function saveDraft() { try { localStorage.setItem("manuel-draft", JSON.stringify(S.draft)); } catch {} }
-  try {
-    const d = JSON.parse(localStorage.getItem("manuel-draft") || "null");
-    if (d && typeof d === "object") Object.assign(S.draft, {
-      story: String(d.story || ""), signature: String(d.signature || ""), context: String(d.context || ""),
-      source: d.source === "es" || d.source === "en" ? d.source : ""
-    });
-  } catch {}
-
-  const newId = () => (crypto.randomUUID ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2)));
-
-  async function doPost() {
+  async function doPost(honeypot) {
     if (!S.draft.story.trim()) { S.status = { key: "needStory", error: true }; renderComposer(); $("story")?.focus(); return; }
     if (!S.draft.signature.trim()) { S.status = { key: "needSig", error: true }; renderComposer(); $("signature")?.focus(); return; }
-    if (!S.db || !S.uid) return;
 
     S.posting = true; S.status = { key: "", error: false }; renderComposer();
-    const entry = {
-      id: newId(),
-      createdAt: new Date().toISOString(),
-      signature: S.draft.signature.trim(),
-      original: S.draft.story.trim(),
-      contextOriginal: S.draft.context.trim(),
-      source: S.draft.source || lang
-    };
-
+    const id = uuid();
+    const token = uuid() + uuid();
+    const source = S.draft.source || lang;
     try {
-      const ref = S.db.collection("stories").doc(S.uid);
-      const cur = await ref.get();
-      const list = cur.exists && Array.isArray(cur.data().entries) ? cur.data().entries.slice() : [];
-      list.push(entry);
-      await ref.set({ entries: list });
-      S.draft.story = "";
-      saveDraft();
+      if (!honeypot) {
+        const res = await api("/rest/v1/memories", {
+          method: "POST",
+          headers: { Prefer: "return=minimal" },
+          body: JSON.stringify({
+            id, source,
+            signature: S.draft.signature.trim(),
+            context: S.draft.context.trim(),
+            original: S.draft.story.trim(),
+            delete_token_hash: await sha256hex(token),
+          }),
+        });
+        if (!res.ok) throw new Error("post " + res.status);
+        S.mine[id] = token; store.set("manuel-mine", S.mine);
+        // Translate into the other language right away so readers don't wait.
+        api("/functions/v1/translate", { method: "POST", body: JSON.stringify({ id, target: source === "es" ? "en" : "es" }) })
+          .then(() => refresh()).catch(() => {});
+      }
+      S.draft.story = ""; store.set("manuel-draft", S.draft);
       S.status = { key: "posted", error: false };
-      S.newId = entry.id;
+      S.newId = id;
       S.posting = false;
       renderComposer();
-      requestAnimationFrame(() => $("m-" + entry.id)?.scrollIntoView({ behavior: "smooth", block: "center" }));
-    } catch (e) {
+      await refresh();
+      requestAnimationFrame(() => $("m-" + id)?.scrollIntoView({ behavior: "smooth", block: "center" }));
+    } catch {
       S.posting = false;
-      if (e && e.code === "invalid_argument") { S.canWrite = false; S.status = { key: "", error: false }; }
-      else S.status = { key: "postFailed", error: true };
+      S.status = { key: "postFailed", error: true };
       renderComposer();
     }
   }
 
   async function removeEntry(e) {
     try {
-      const ref = S.db.collection("stories").doc(e.ownerId);
-      const cur = await ref.get();
-      const list = cur.exists && Array.isArray(cur.data().entries) ? cur.data().entries.filter((x) => x.id !== e.id) : [];
-      await ref.set({ entries: list });
-      S.confirmId = null;
+      const res = await api("/rest/v1/rpc/delete_memory", { method: "POST", body: JSON.stringify({ p_id: e.id, p_token: S.mine[e.id] }) });
+      if (!res.ok || (await res.json()) !== true) throw new Error();
+      delete S.mine[e.id]; store.set("manuel-mine", S.mine);
+      S.entries = S.entries.filter((x) => x.id !== e.id);
     } catch {
-      S.confirmId = null;
       S.status = { key: "removeFailed", error: true };
       renderComposer();
     }
+    S.confirmId = null;
     renderMemories();
   }
 
-  // ---------- Boot ----------
+  // ---------- Loading ----------
+  let lastJSON = "";
+  async function refresh() {
+    try {
+      const fresh = await loadMemories();
+      // keep translations fetched during this visit if the list hasn't caught up yet
+      const known = new Map(S.entries.map((x) => [x.id, x]));
+      fresh.forEach((x) => { const k = known.get(x.id); if (k) x.translations = { ...(k.translations || {}), ...(x.translations || {}) }; });
+      const json = JSON.stringify(fresh);
+      const changed = json !== lastJSON || S.mode !== "live";
+      lastJSON = json;
+      S.entries = fresh;
+      S.mode = "live";
+      if (changed) renderMemories();
+    } catch {
+      if (S.mode !== "live") { S.entries = keepsake.slice(); S.mode = "stale"; renderMemories(); }
+    }
+  }
+
   applyCopy();
   renderComposer();
+  if (keepsake.length) S.entries = keepsake.slice();
   renderMemories();
-
-  const use = (name) => (window.claude && typeof window.claude.use === "function") ? window.claude.use(name).catch(() => null) : Promise.resolve(null);
-
-  (async () => {
-    if (FAMILY) { S.mode = "offline"; renderComposer(); renderMemories(); return; }
-    const [db, user, sample] = await Promise.all([use("db"), use("user"), use("sample")]);
-    S.sample = sample;
-
-    if (!db) {
-      S.mode = "offline";
-      renderComposer(); renderMemories();
-      return;
-    }
-    S.db = db;
-
-    if (user) {
-      const me = await user.me();
-      S.uid = me.id;
-      S.isOwner = !!me.isOwner;
-      S.canWrite = await user.can("data.write");
-      if (!S.draft.signature && me.name) S.draft.signature = me.name;
-    }
-
-    const timer = setTimeout(() => { if (S.mode === "loading") { S.mode = "slow"; renderMemories(); } }, 10000);
-    db.collection("stories").onSnapshot((snap) => {
-      const all = [];
-      snap.docs.forEach((d) => {
-        const data = d.data() || {};
-        (Array.isArray(data.entries) ? data.entries : []).forEach((x) => {
-          if (x && typeof x === "object" && x.id && typeof x.original === "string") all.push({ ...x, ownerId: d.id });
-        });
-      });
-      S.entries = all;
-      const before = S.mode;
-      if (!snap.metadata.fromCache) { clearTimeout(timer); S.mode = "ready"; }
-      else if (S.mode === "loading" && all.length) S.mode = "ready";
-      renderMemories();
-      if (before !== S.mode) renderComposer();   // don't rebuild the form under someone who is typing
-    }, () => {
-      clearTimeout(timer);
-      S.mode = S.entries.length ? "ready" : "slow";
-      renderMemories();
-    });
-
-    db.collection("translations").onSnapshot((snap) => {
-      const next = {};
-      snap.docs.forEach((d) => { const v = d.data(); if (v && typeof v === "object") next[d.id] = v; });
-      // keep translations this reader just made, in case their save was refused
-      for (const [id, v] of Object.entries(S.tr)) next[id] = { ...v, ...(next[id] || {}) };
-      S.tr = next;
-      if (S.mode === "ready") renderMemories();
-    }, () => {});
-
-    renderComposer();
-  })();
+  if (CFG.supabaseUrl) refresh(); else { S.mode = "stale"; renderMemories(); }
+  setInterval(() => { if (document.visibilityState === "visible" && !S.posting) refresh(); }, 60000);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refresh(); });
 })();
 </script>
