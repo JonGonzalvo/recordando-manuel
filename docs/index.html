@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -13,21 +13,32 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: a quiet memorial book. Portrait and dedication side by side, a full-width writing desk, then one column of letters. Colors taken from the pine trail in his photo. */
-/* One deliberate look: dark pine, the same for every viewer and device. */
+/* Inside Claude the page follows each viewer's theme; the family copy sets data-theme="dark" on <html> and is always dark. */
 :root {
-  --bg: #121713;
-  --surface: #19201B;
-  --ink: #E4E7E0;
-  --muted: #9AA398;
-  --rule: #2D3630;
-  --accent: #C99369;
-  --accent-ink: #1B120B;
-  --moss: #A1B48C;
-  --field: #0F1310;
-  --danger: #E08A7C;
+  --bg: #ECEEE8;
+  --surface: #F5F6F2;
+  --ink: #1D2520;
+  --muted: #5B655D;
+  --rule: #C9CEC3;
+  --accent: #74462A;
+  --accent-ink: #FFFFFF;
+  --moss: #50603F;
+  --field: #FFFFFF;
+  --danger: #8E2F23;
   --display: "Libre Caslon Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121713; --surface: #19201B; --ink: #E4E7E0; --muted: #9AA398; --rule: #2D3630;
+    --accent: #C99369; --accent-ink: #1B120B; --moss: #A1B48C; --field: #0F1310; --danger: #E08A7C;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121713; --surface: #19201B; --ink: #E4E7E0; --muted: #9AA398; --rule: #2D3630;
+  --accent: #C99369; --accent-ink: #1B120B; --moss: #A1B48C; --field: #0F1310; --danger: #E08A7C;
   color-scheme: dark;
 }
 
