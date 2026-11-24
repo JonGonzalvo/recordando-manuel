@@ -1,0 +1,48 @@
+# Free Supabase projects pause after about a week without activity, and a paused project means nobody
+# can post or translate (the page falls back to the saved copy). Same approach as Colibrí: once a day this
+# asks the database for one row and checks that the translate function answers, using the public
+# (publishable) key from site.config.json. A failure here means the project is paused or down, and
+# GitHub emails the repo owner.
+#
+# GitHub also turns off scheduled workflows in a repo with no commits for 60 days, which could happen
+# here once the memories stop coming in. The last step re-enables both scheduled workflows on every
+# run, which keeps them on.
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: "41 14 * * *" # daily, 8:41 AM in Mexico City
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: site.config.json
+          sparse-checkout-cone-mode: false
+      - name: Query the database and check the translate function
+        run: |
+          url=$(jq -r .supabaseUrl site.config.json)
+          key=$(jq -r .publishableKey site.config.json)
+          check() {
+            code=$(curl -s -o /dev/null -w '%{http_code}' --retry 3 --retry-delay 20 -X "$1" -H "apikey: $key" "$url/$2")
+            echo "$1 $2 -> $code"
+            [ "$code" = "200" ] || { echo "::error::Supabase answered $code for $2 (paused or down?)"; exit 1; }
+          }
+          check GET "rest/v1/memories?select=id&limit=1"
+          check GET "auth/v1/health"
+          check OPTIONS "functions/v1/translate"
+      - name: Keep the scheduled workflows switched on
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for wf in keep-supabase-awake.yml snapshot.yml; do
+            gh workflow enable "$wf" --repo "$GITHUB_REPOSITORY" && echo "$wf enabled"
+          done

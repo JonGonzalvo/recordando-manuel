@@ -11,7 +11,10 @@ Anyone with the link can read and post memories (no account). Memories are store
 - `supabase/functions/translate/` translates a memory with the Claude API and caches it on the row.
   Needs the secret `ANTHROPIC_API_KEY`: `supabase secrets set ANTHROPIC_API_KEY=... --project-ref gimqlhciucrallibgytv`
 - `.github/workflows/snapshot.yml` saves a copy of the memories into the page every 6 hours. The page shows that
-  copy if Supabase can't be reached, and the reads keep the free project from pausing.
+  copy if Supabase can't be reached.
+- `.github/workflows/keep-supabase-awake.yml` pings Supabase once a day (one database row, auth health, the
+  translate function) so the free project doesn't pause, and fails, emailing the repo owner, if it's down. It
+  also re-enables both scheduled workflows so GitHub doesn't switch them off after 60 days without commits.
 
 ## Moderating
 
