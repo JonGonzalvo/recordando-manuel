@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T08:29:18.374Z",
+  "updatedAt": "2026-11-25T21:39:33.923Z",
   "entries": [
     {
       "id": "dcaccd9c-3545-4a8a-b68c-57b49bcf853d",
@@ -68,6 +68,48 @@
         "en": {
           "story": "I had the good fortune of working with Manuel for about 3 years at Bluesky E-Learn and then at Momentive. I remember him as a great human being, always wanting to help, to do his part even with things that weren't his responsibility. We were both at the 2024 Hackathon, which he drove to from Tijuana in his SUV, a Buick, I remember that was the make, and we had very enjoyable conversations on the drives to the office. I still have the $10 MXN coin he gave me when he realized I liked collecting coins from different countries. I gave him a Colombian peso coin too. Now that he is no longer with us in this world, I want to use his memory as a way to ease my pain over his loss. I know the PathLMS engineering team, his friends, and his family feel it too. Wherever you are, Manuel, thank you for sharing a bit of that good Mezcal, and for sharing your kindness and your humanity with us, even in the most difficult moments at work. R.I.P.",
           "context": "Integrations teammate"
+        }
+      }
+    },
+    {
+      "id": "35e4e22e-3f6c-4daa-868f-0371235d0d08",
+      "createdAt": "2026-11-25T12:53:10.648464+00:00",
+      "signature": "Bohdan",
+      "original": "Manuel was a wonderful colleague and, above all, a wonderful person. He was kind, generous, and always ready to help and support others. On every call and in every chat, he took the time to ask how everyone was doing and whether anyone needed a hand.\n\nI’m truly sorry I never got the chance to meet him in person. He will be deeply missed.",
+      "contextOriginal": "Coworker",
+      "source": "en",
+      "translations": {
+        "es": {
+          "story": "Manuel fue un compañero maravilloso y, sobre todo, una persona maravillosa. Era amable, generoso y siempre estaba dispuesto a ayudar y apoyar a los demás. En cada llamada y en cada chat, se tomaba el tiempo de preguntar cómo estaban todos y si alguien necesitaba una mano.\n\nDe verdad lamento no haber tenido nunca la oportunidad de conocerlo en persona. Lo vamos a extrañar muchísimo.",
+          "context": "Compañero de trabajo"
+        }
+      }
+    },
+    {
+      "id": "9a8ee473-3854-4ab5-9750-c9f043070f66",
+      "createdAt": "2026-11-25T17:02:04.03025+00:00",
+      "signature": "Natalia",
+      "original": "I worked with Manuel for only a short time on the Integrations team, but he will always remain in my heart as an incredibly kind, genuine, and warm person.\nEvery conversation with Manuel began with him asking how I was doing and how my family was. He would ask about my country and about how we were coping with the war. His words were always sincere, thoughtful, and supportive, and I will always remember the kindness and compassion he showed.\nI also had the opportunity to work with Manuel on several different tasks, and I was always impressed by his professionalism, patience, and willingness to help. No matter the challenge, he approached everything with calmness, respect, and genuine care for the people around him.\nI feel very grateful that, even for a short time, I had the chance to know and work with Manuel. I will remember him not only as a wonderful colleague and professional, but above all as a truly kind and caring human being.\nMy deepest condolences to Manuel’s family, friends, and everyone who had the privilege of knowing him. He will be deeply missed and warmly remembered.",
+      "contextOriginal": "Coworker",
+      "source": "en",
+      "translations": {
+        "es": {
+          "story": "Trabajé con Manuel solo por poco tiempo en el equipo de Integrations, pero siempre permanecerá en mi corazón como una persona increíblemente amable, auténtica y cálida.\nCada conversación con Manuel empezaba con él preguntándome cómo estaba y cómo estaba mi familia. Me preguntaba por mi país y por cómo estábamos sobrellevando la guerra. Sus palabras siempre eran sinceras, atentas y solidarias, y siempre recordaré la bondad y la compasión que me mostró.\nTambién tuve la oportunidad de trabajar con Manuel en varias tareas distintas, y siempre me impresionaron su profesionalismo, su paciencia y su disposición para ayudar. Sin importar el reto, lo enfrentaba todo con calma, respeto y un interés genuino por las personas a su alrededor.\nMe siento muy agradecido de haber tenido la oportunidad, aunque fuera por poco tiempo, de conocer a Manuel y trabajar con él. Lo recordaré no solo como un compañero y profesional maravilloso, sino, sobre todo, como un ser humano verdaderamente amable y atento con los demás.\nMi más sentido pésame a la familia de Manuel, a sus amigos y a todos los que tuvieron el privilegio de conocerlo. Lo extrañaremos profundamente y lo recordaremos con mucho cariño.",
+          "context": "Compañero de trabajo"
+        }
+      }
+    },
+    {
+      "id": "326f8049-f2e9-418f-a041-7466fc5d8038",
+      "createdAt": "2026-11-25T21:05:46.722556+00:00",
+      "signature": "Amy Rollins",
+      "original": "It's bittersweet that I had the opportunity to work more closely with Manuel over the past few months, because it allowed me to get to know what a genuinely warm person he was. I am heartbroken for his family, whom he spoke of so often. Any call I got on with him we'd talk about any adventures or outings we were planning with our kids, and he could have a friendly chat with anyone it seemed. Beyond that, he was an incredible helper and team player, and I was so lucky to have his support when we ran into tricky issues. I am grateful for the time I got to know him just a little better. I hope our thoughts give his family just a little glimpse into how appreciated and well regarded he was by the people he worked alongside when he had to focus his time away from them.",
+      "contextOriginal": "Coworker",
+      "source": "en",
+      "translations": {
+        "es": {
+          "story": "Es agridulce que haya tenido la oportunidad de trabajar más de cerca con Manuel en los últimos meses, porque eso me permitió conocer lo genuinamente cálida que era su persona. Tengo el corazón roto por su familia, de quien hablaba tan seguido. En cada llamada que teníamos, platicábamos de las aventuras o salidas que estábamos planeando con nuestros hijos, y parecía que podía tener una conversación amena con cualquiera. Además de eso, era increíblemente servicial y un gran compañero de equipo, y tuve mucha suerte de contar con su apoyo cuando nos topábamos con problemas complicados. Agradezco el tiempo en que pude conocerlo un poquito mejor. Espero que nuestras palabras le den a su familia aunque sea un pequeño vistazo de lo apreciado y estimado que era por las personas con quienes trabajaba durante el tiempo que tenía que pasar lejos de ellos.",
+          "context": "Compañero de trabajo"
         }
       }
     }
